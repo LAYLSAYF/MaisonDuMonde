@@ -28,5 +28,21 @@ class CategoryRepository extends EntityRepository
 			'name'=>$category->getName(),
 		);
 		return $result;
-    }      
+    } 
+    	
+    public function getCategories()
+    {
+        $data = [];
+        $qb = $this->createQueryBuilder('c');
+        $categories = $qb->getQuery()->getResult();
+
+        foreach ($categories as $key => $categorie){
+                $data[] = array(
+                    'id' => $categorie->getId(),
+                    'name'=>$categorie->getName()  
+                );
+        }
+
+        return $data;
+    }
 }

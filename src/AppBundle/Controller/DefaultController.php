@@ -36,4 +36,23 @@ class DefaultController extends Controller
         $category = $em->getRepository('AppBundle:Category')->addCategory($nameCategory);
         return new JsonResponse($category);
     }
+
+
+    /**
+     * @Doc\ApiDoc(
+     *     description = "Récuperer une catégorie", 
+           section = "Categories", 
+     *     statusCodes={
+     *         200="Returned when success"
+     *     }
+     * )
+     * @Rest\View(statusCode=Response::HTTP_CREATED)
+     * @Rest\Get("/categories/")
+     */
+    public function getCategoriesAction()
+    {
+       $em = $this->getDoctrine()->getManager();
+       $tab = $em->getRepository('AppBundle:Category')->getCategories();
+       return new JsonResponse($tab);
+    }
 }
