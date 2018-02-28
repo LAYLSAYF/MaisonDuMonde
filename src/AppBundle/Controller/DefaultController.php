@@ -79,4 +79,57 @@ class DefaultController extends Controller
         $product = $em->getRepository('AppBundle:Products')->addProduct($data);
         return new JsonResponse($product, Response::HTTP_CREATED);
     }
+
+            /**
+     * @Doc\ApiDoc(
+     *     description = "Récuperer les produits d'une catégorie",
+     *     section = "Produits",
+     *     parameters = {
+     *         { "name" = "id", "dataType" = "integer", "required" = true, "description" = "identifiant de la catégrie" }
+     *     },
+     *     statusCodes={
+     *     }
+     * )
+     * @Rest\View(statusCode=Response::HTTP_OK)
+     * @Rest\Get("categories/{id}/products/")
+     */
+    public function getProductsFromCategoriesAction(Request $request)
+    {
+
+        $produits=[];
+        $results;
+
+        $em   = $this->getDoctrine()->getManager();
+        $id = (int)$request->get('id');
+
+        // First solution 
+        $categorie = $this->getDoctrine()->getRepository('AppBundle:Category')->find($id);
+
+        //var_dump($categorie); die ;
+        $pdts = $categorie->getProducts();
+       
+        $results['categorie']['nom']=$categorie->getName();
+
+        foreach($pdts as $produit){
+            $results['categorie']['produits'][$produit->getId()]=array(
+
+                    'id'=>$produit->getId(),
+                    'nom'=>$produit->getNom(), 
+
+            );
+
+
+           $prices = $produit->getPrices();
+
+            foreach($prices as $price){
+                $results['categorie']['produits'][$produit->getId()]['prix'][$price->getId()]=array(
+                        'amount'=>$price->getAmount(),
+                        'currency'=>$price->getCurrency(),
+                );
+
+            }
+        }
+    
+        return new JsonResponse($results);
+    }
 }
