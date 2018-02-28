@@ -3,11 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Category
  *
- * @ORM\Table(name="category")
+ * @ORM\Table(name="categories")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
 class Category
@@ -22,12 +23,44 @@ class Category
     private $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Products", mappedBy="categories", cascade={"all"})
+     * @ORM\JoinTable(
+     *  name="categories_products",
+     *  joinColumns={
+     *      @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     *  },
+     *  inverseJoinColumns={
+     *      @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *  }
+     * )
+     */
+    private $products;
+
+    /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255, unique=true)
      */
     private $name;
 
+
+    /**
+     *  Set id
+
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -60,5 +93,38 @@ class Category
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add products
+     *
+     * @param \AppBundle\Entity\Products $products
+     * @return Product
+     */
+    public function addProduct(\AppBundle\Entity\Products $products)
+    {
+        $this->products[] = $products;
+
+        return $this;
+    }
+
+    /**
+     * Remove products
+     *
+     * @param \AppBundle\Entity\Products $products
+     */
+    public function removeProduct(\AppBundle\Entity\Products $products)
+    {
+        $this->products->removeElement($products);
+    }
+
+    /**
+     * Get products
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getProducts()
+    {
+        return $this->products;
     }
 }

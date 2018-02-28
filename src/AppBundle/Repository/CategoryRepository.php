@@ -37,10 +37,10 @@ class CategoryRepository extends EntityRepository
         $categories = $qb->getQuery()->getResult();
 
         foreach ($categories as $key => $categorie){
-                $data[] = array(
-                    'id' => $categorie->getId(),
-                    'name'=>$categorie->getName()  
-                );
+            $data[] = array(
+                'id' => $categorie->getId(),
+                'name'=>$categorie->getName()  
+            );
         }
 
         return $data;
