@@ -14,22 +14,22 @@ use Doctrine\ORM\EntityManager;
  */
 class CategoryRepository extends EntityRepository
 {
- 	public function addCategory($name)
+    public function addCategory($name)
     {
         $em = $this->getEntityManager();
         $category = new Category();
         $category->setName($name);
 
         $em->persist($category);
-		$em->flush();
+        $em->flush();
 
-		$result = array(
-			'id'=>$category->getId(),
-			'name'=>$category->getName(),
-		);
-		return $result;
+        $result = array(
+            'id'=>$category->getId(),
+            'name'=>$category->getName(),
+        );
+        return $result;
     } 
-    	
+        
     public function getCategories()
     {
         $data = [];
@@ -44,5 +44,11 @@ class CategoryRepository extends EntityRepository
         }
 
         return $data;
+    }
+
+    public function getAll()
+    {
+        $qb = $this->createQueryBuilder('c');
+        return $qb;
     }
 }

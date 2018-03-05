@@ -34,9 +34,6 @@ class DefaultController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $nameCategory =$request->get('name');
-        if (is_null($nameCategory)) {
-            return new JsonResponse(['code' =>Response::HTTP_BAD_REQUEST,  'message' => 'Category not found'], Response::HTTP_BAD_REQUEST);
-        }
         $category = $em->getRepository('AppBundle:Category')->addCategory($nameCategory);
         return new JsonResponse($category, Response::HTTP_CREATED);
     }
@@ -74,8 +71,12 @@ class DefaultController extends Controller
      */
     public function createProductAction(Request $request)
     {
+        //die;
         $em   = $this->getDoctrine()->getManager();
         $data = $request->request->all();
+        //$categories = $this->getRepository('AppBundle:Category')->getAll();
+       // $categories  = [ 'a' => 'a', 't'=> 'v'];
+      // $form       = $this->createForm(new ProductsType());
         $product = $em->getRepository('AppBundle:Products')->addProduct($data);
         return new JsonResponse($product, Response::HTTP_CREATED);
     }
@@ -97,18 +98,15 @@ class DefaultController extends Controller
     {
 
         $produits=[];
-        $results;
+        $results= [];
 
         $em   = $this->getDoctrine()->getManager();
         $id = (int)$request->get('id');
 
-        // First solution 
         $categorie = $this->getDoctrine()->getRepository('AppBundle:Category')->find($id);
-
-        //var_dump($categorie); die ;
         $pdts = $categorie->getProducts();
-       
-        $results['categorie']['nom']=$categorie->getName();
+
+        $results['categorie']['nom'] = $categorie->getName();
 
         foreach($pdts as $produit){
             $results['categorie']['produits'][$produit->getId()]=array(

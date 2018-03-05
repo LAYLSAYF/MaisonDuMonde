@@ -38,8 +38,7 @@ class Prices
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Products", inversedBy="prices", cascade={"all"})
      */
-    private $products;
-
+    private $product;
 
     /**
      * Get id
@@ -97,13 +96,26 @@ class Prices
         return $this->currency;
     }
 
+    /**
+     * Set product
+     *
+     * @param \AppBundle\Entity\Products $product
+     * @return Prices
+     */
+    public function setProduct(\AppBundle\Entity\Products $product = null)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \AppBundle\Entity\Products 
+     */
     public function getProduct()
     {
         return $this->product;
-    }
-
-    public function setProduct(Products $product)
-    {
-        $this->product = $product;
     }
 }

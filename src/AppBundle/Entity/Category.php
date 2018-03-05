@@ -23,7 +23,7 @@ class Category
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Products", mappedBy="categories", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Products", inversedBy="categories", cascade={"all"})
      * @ORM\JoinTable(
      *  name="categories_products",
      *  joinColumns={
@@ -39,20 +39,9 @@ class Category
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
-
-
-    /**
-     *  Set id
-
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
 
     /**
      * Constructor
@@ -99,7 +88,7 @@ class Category
      * Add products
      *
      * @param \AppBundle\Entity\Products $products
-     * @return Product
+     * @return Category
      */
     public function addProduct(\AppBundle\Entity\Products $products)
     {
@@ -126,5 +115,10 @@ class Category
     public function getProducts()
     {
         return $this->products;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

@@ -37,24 +37,23 @@ class Products
     private $stock;
 
     /**
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category",  inversedBy="products", cascade={"all"})
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Category",  mappedBy="products", cascade={"all"})
      * @ORM\JoinTable(
-     *  name="cat_products",
+     *  name="categories_products",
      *  joinColumns={
-     *      @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      *  },
      *  inverseJoinColumns={
-     *      @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     *      @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      *  }
      * )
      */
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Prices", mappedBy="products", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Prices", mappedBy="product", cascade={"all"})
      */
     private $prices;
-
 
     /**
      * Constructor
@@ -125,7 +124,7 @@ class Products
      * Add categories
      *
      * @param \AppBundle\Entity\Category $categories
-     * @return 
+     * @return Products
      */
     public function addCategory(\AppBundle\Entity\Category $categories)
     {
@@ -155,10 +154,10 @@ class Products
     }
 
     /**
-     * Add Prices
+     * Add prices
      *
      * @param \AppBundle\Entity\Prices $prices
-     * @return 
+     * @return Products
      */
     public function addPrice(\AppBundle\Entity\Prices $prices)
     {
@@ -167,19 +166,21 @@ class Products
         return $this;
     }
 
-     /**
-     * Remove Prices
+    /**
+     * Remove prices
      *
      * @param \AppBundle\Entity\Prices $prices
      */
     public function removePrice(\AppBundle\Entity\Prices $prices)
     {
-        $this->categories->removeElement($categories);
+        $this->prices->removeElement($prices);
     }
 
     /**
-     * @return Prices[]
-    */
+     * Get prices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
     public function getPrices()
     {
         return $this->prices;

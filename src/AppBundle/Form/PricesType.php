@@ -13,10 +13,7 @@ class PricesType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-        ->add('amount')
-        ->add('currency')
-        ->add('product');
+        $builder->add('amount')->add('currency');
     }/**
      * {@inheritdoc}
      */
