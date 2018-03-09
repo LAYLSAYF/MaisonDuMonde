@@ -19,6 +19,7 @@ class AppKernel extends Kernel
 
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             
         );
 

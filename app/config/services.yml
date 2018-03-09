@@ -4,9 +4,8 @@ parameters:
     #parameter_name: value
 
 services:
-    #service_name:
-    #    class: AppBundle\Directory\ClassName
-    #    arguments: ['@another_service_name', 'plain_value', '%parameter_name%']
-    lexik_jwt_authentication.jwt_token_authenticator:
-        class: AppBundle\Security\Guard\JWTTokenAuthenticator
-        # parent: lexik_jwt_authentication.security.guard.jwt_token_authenticator
+    my_custom_authenticator:
+        class: AppBundle\Security\Authenticator
+        arguments: ["@router"]
+    app.user_provider:
+        class: AppBundle\Security\UserBaseProvider
