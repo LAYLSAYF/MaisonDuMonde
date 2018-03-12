@@ -1,0 +1,42 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="users")
+ */
+class Visiteurs
+{
+    /**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+    
+    /*
+    *@ORM\Column(type="integer", name="adresse_ip")
+    */
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Visiteurs", inversedBy="adressIP", cascade={"all"})
+     */
+    protected $adressIP;
+
+    /*
+    *@ORM\Column(type="datetime", name="date")
+    */
+    protected $date;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+}

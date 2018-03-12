@@ -33,7 +33,7 @@ class DefaultController extends Controller
     public function createCategoriesAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $nameCategory =$request->get('name');
+        $nameCategory = $request->get('name');
         $category = $em->getRepository('AppBundle:Category')->addCategory($nameCategory);
         return new JsonResponse($category, Response::HTTP_CREATED);
     }
