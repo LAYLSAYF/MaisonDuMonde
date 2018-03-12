@@ -25,12 +25,4 @@ class CategoryType extends AbstractType
             'data_class' => 'AppBundle\Entity\Category'
         ));
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return '';
-    }
 }

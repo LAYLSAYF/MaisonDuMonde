@@ -14,21 +14,11 @@ use AppBundle\Form\PricesType;
 
 class ProductsType extends AbstractType
 {
-    
-    //private $categories;
-
-    //public function __constrcut(array $categories){
-
-   //     $this->categories = $categories;
-   // }
-
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        
-        //$categoriesChoiceList   = new ObjectChoiceList($this->categories);
         $builder
           ->add('nom', 'text', array('label' => 'nom'))
           ->add('prices', CollectionType::class, [
@@ -41,21 +31,6 @@ class ProductsType extends AbstractType
                 'entry_type' => CategoryType::class,
                 'error_bubbling' => false,
             ));
-         // ->add('categories')
-/*          ->add('categories', 'choice', array(
-             'choices' => array('a' => 'ahhh', 'b' => 'bhhh'),
-             'label'   => 'Catégorie du produit',
-             'choice_list' => $categoriesChoiceList,
-             'multiple' => true,
-          ));*/
-/*          ->add('categories','entity',array(
-              'class'=> 'AppBundle\Entity\Category',
-              'query_builder' => function (\AppBundle\Repository\CategoryRepository $repo) {
-                  return $repo->findAll();
-              },                
-              'expanded' => true,
-              'multiple' => true
-          ));*/
     }
 
     /**
@@ -66,13 +41,5 @@ class ProductsType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\Products'
         ));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getBlockPrefix()
-    {
-        return '';
     }
 }

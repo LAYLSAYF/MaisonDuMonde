@@ -61,9 +61,7 @@ class Authenticator extends AbstractGuardAuthenticator
      */
     public function start(Request $request, AuthenticationException $authException = null)
 	{
-	   $url = $this->router->generate('login');
-	   //die ;
-	 // return new RedirectResponse($url);
+	   return new RedirectResponse($this->router->generate('login'));
 	}
 
     public function supportsRememberMe()

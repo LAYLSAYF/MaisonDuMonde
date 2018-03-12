@@ -7,8 +7,7 @@ NelmioApiDocBundle:
     prefix:   /api/doc
 
 login:
-    path: /api/login_check
-
+    path: /api/doc/login_check
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"

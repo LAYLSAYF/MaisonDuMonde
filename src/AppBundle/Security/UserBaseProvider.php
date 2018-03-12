@@ -4,13 +4,14 @@ namespace AppBundle\Security;
 
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use AppBundle\Entity\User;
 
 class UserBaseProvider implements UserProviderInterface
 {
 
     public function loadUserByUsername($username)
     {
-        $user = new TbluserBase();
+        $user = new User();
         $user->setUserName($username);
         return $user;
     }
