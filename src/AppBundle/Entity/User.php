@@ -1,98 +1,85 @@
 <?php
 
 namespace AppBundle\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
-* @ORM\Entity()
-* @ORM\Table(name="users")
-*/
+ * @ORM\Entity
+ * @ORM\Table(name="users")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
+ */
 class User
 {
     /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
+     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
+    
+    /**
+    *
+    *@ORM\Column(type="string", name="nom")
+    *
+    */
+    protected $name;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Visiteurs", mappedBy="adressIP", cascade={"all"})
+     * @ORM\Column(type="integer", name="adresse_ip")
      */
-    protected $password;
+    protected $addressIP;
 
     /**
-     * @ORM\Column(type="string")
+     * Constructor
      */
-    protected $userName;    
+    public function __construct()
+    {
+        $this->addressIP = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
-     * @ORM\Column(type="string")
+     * Get id
+     *
+     * @return integer 
      */
-    protected $email;
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
-     * @ORM\Column(type="boolean")
+     * Add addressIP
+     *
+     * @param \AppBundle\Entity\Visiteurs $addressIP
+     * @return User
      */
-    protected $enabled;
-
-    protected $plainPassword;
-
-    public function getPassword()
+    public function addAddressIP(\AppBundle\Entity\Visiteurs $addressIP)
     {
-        return $this->password;
+        $this->addressIP[] = $addressIP;
+
+        return $this;
     }
 
-    public function setPassword($password)
+    /**
+     * Remove addressIP
+     *
+     * @param \AppBundle\Entity\Visiteurs $addressIP
+     */
+    public function removeAddressIP(\AppBundle\Entity\Visiteurs $addressIP)
     {
-        $this->password = $password;
+        $this->addressIP->removeElement($addressIP);
     }
 
-    public function setPlainPassword($plainPassword)
+    /**
+     * Get addressIP
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAddressIP()
     {
-        $this->plainPassword = $plainPassword;
-    }
-
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    public function setUserName($userName)
-    {
-        $this->userName = $userName;
-    }
-
-    public function getRoles()
-    {
-        return [];
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUsername()
-    {
-        return $this->userName;
-    }
-
-    public function eraseCredentials()
-    {
-        // Suppression des données sensibles
-        $this->plainPassword = null;
-    }
-
-    public function setEnabled($enabled){
-        $this->enabled = $enabled;
+        return $this->addressIP;
     }
 }
+
