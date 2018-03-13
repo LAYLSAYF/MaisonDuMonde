@@ -15,12 +15,34 @@ class QueryController extends Controller
      *  name="_accueil",
      * )
      */
-	public function queryOne(Request $request){
+	public function queryOneAction(Request $request){
 		
 		$em = $this->getDoctrine()->getManager();
 
 		$users = $em->getRepository('AppBundle:Visiteurs')
 		            ->myFindAll();
+
+		foreach ( $users as $key => $value ){
+			var_dump($value); 
+		}           
+		die ;
 		return $users;
+	}
+
+	/**
+     * @Route(
+     *  "/querytwo",
+     *  name="_accueil1",
+     * )
+     */
+	public function querytwo(Request $request){
+		$em = $this->getDoctrine()->getManager();
+
+		$users = $em->getRepository("AppBundle:User")->find(2);
+
+		$users = $em->getRepository('AppBundle:Visiteurs')
+		            ->myFindTwo($users);
+
+
 	}
 }

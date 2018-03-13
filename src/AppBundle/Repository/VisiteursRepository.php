@@ -29,4 +29,16 @@ class VisiteursRepository extends EntityRepository
 		return $rst;
 
 	}
+
+	public function myFindTwo($users){
+
+		$qb = $this->_em->createQueryBuilder()
+		$qb->select('v', 'u')
+		   ->from('AppBundle\Entity\Visiteurs', 'v')
+		   ->leftJoin('v.user', 'u')
+           ->where('u = :user')
+           ->setParameter('user', $users)
+        return $qb->getQuery()->getResult();
+
+	}
 }
